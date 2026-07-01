@@ -1,0 +1,30 @@
+# Build
+bin/
+obj/
+
+# Visual Studio
+.vs/
+
+# VS Code
+.vscode/
+
+# Rider
+.idea/
+
+# User files
+*.user
+*.suo
+
+# Logs
+*.log
+
+# Environment
+.env
+appsettings.Development.json
+
+# Node
+frontend/auth-ui/node_modules/
+
+# React build
+frontend/auth-ui/build/
+frontend/auth-ui/dist/
