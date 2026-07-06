@@ -2,7 +2,7 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Button,
+
   Box,
 } from "@mui/material";
 
@@ -24,17 +24,7 @@ function Navbar() {
           🗺️ GeoDraw
         </Typography>
 
-        <Button color="inherit">
-          Point
-        </Button>
-
-        <Button color="inherit">
-          Line
-        </Button>
-
-        <Button color="inherit">
-          Polygon
-        </Button>
+        <Box sx={{ flexGrow: 1 }} />
 
         <Box sx={{ flexGrow: 1 }} />
 

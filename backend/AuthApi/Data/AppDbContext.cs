@@ -11,5 +11,8 @@ namespace AuthApi.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<PointDrawing> Points { get; set; }
+        public DbSet<LineDrawing> Lines { get; set; }
+        public DbSet<PolygonDrawing> Polygons { get; set; }
     }
 }

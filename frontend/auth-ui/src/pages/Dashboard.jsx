@@ -1,47 +1,66 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Typography } from '@mui/material';
+import { useRef, useState } from 'react';
+import VectorSource from 'ol/source/Vector';
+import DrawingToolbar from '../components/DrawingToolbar';
+import MapView from '../map/MapView';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 function Dashboard() {
+  const [drawType, setDrawType] = useState(null);
+  const vectorSource = useRef(new VectorSource());
+  const [lastFeature, setLastFeature] = useState(null);
+  const [selectedFeature, setSelectedFeature] = useState(null);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: '',
+    severity: 'success',
+  });
+
+  const showSnackbar = (message, severity = 'success') => {
+    setSnackbar({
+      open: true,
+      message,
+      severity,
+    });
+  };
+
   return (
-    <Box sx={{ p: 3 }}>
+    <Box sx={{ p: 2 }}>
+      <DrawingToolbar
+        drawType={drawType}
+        setDrawType={setDrawType}
+        vectorSource={vectorSource}
+        lastFeature={lastFeature}
+        selectedFeature={selectedFeature}
+        showSnackbar={showSnackbar}
+      />
 
-      <Paper
-        elevation={3}
-        sx={{
-          p:3,
-          mb:3,
-          borderRadius:3
-        }}
+      <Typography sx={{ mb: 2 }}>
+        Aktif Mod :<strong> {drawType || 'Yok'}</strong>
+      </Typography>
+
+      <MapView
+        drawType={drawType}
+        vectorSource={vectorSource}
+        setLastFeature={setLastFeature}
+        setSelectedFeature={setSelectedFeature}
+      />
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        <Typography variant="h5" fontWeight="bold">
-          Hoş Geldiniz 👋
-        </Typography>
-
-        <Typography color="text.secondary">
-          Point, Line veya Polygon seçerek harita üzerinde çizim yapabilirsiniz.
-        </Typography>
-
-      </Paper>
-
-      <Paper
-        elevation={3}
-        sx={{
-          height:"75vh",
-          borderRadius:3,
-          display:"flex",
-          justifyContent:"center",
-          alignItems:"center"
-        }}
-      >
-
-        <Typography
-          variant="h4"
-          color="text.secondary"
+        <Alert
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: '100%' }}
         >
-          🌍 OpenLayers Haritası Buraya Gelecek
-        </Typography>
-
-      </Paper>
-
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
